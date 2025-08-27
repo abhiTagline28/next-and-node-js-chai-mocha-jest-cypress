@@ -54,13 +54,48 @@ const createStudent = async (studentData) => {
     ...otherFields
   } = studentData;
 
-  // Check if user already exists
+  // Check if user already exists (including deleted ones)
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new ApiError("User already exists with this email", 400);
+    if (existingUser.isActive) {
+      throw new ApiError("User already exists with this email", 400);
+    } else {
+      // If user exists but is deleted, we can reuse the email
+      // Update the existing user with new data
+      existingUser.name = name;
+      existingUser.password = password;
+      existingUser.role = "student";
+      existingUser.isActive = true;
+      await existingUser.save();
+
+      // Create or update student profile
+      let student = await Student.findOne({ user: existingUser._id });
+      if (student) {
+        // Update existing student profile
+        student.grade = grade;
+        student.section = section;
+        student.dateOfBirth = dateOfBirth;
+        student.gender = gender;
+        student.isActive = true;
+        Object.assign(student, otherFields);
+        await student.save();
+      } else {
+        // Create new student profile
+        student = await Student.create({
+          user: existingUser._id,
+          grade,
+          section,
+          dateOfBirth,
+          gender,
+          ...otherFields,
+        });
+      }
+
+      return student.populate("user", "name email role");
+    }
   }
 
-  // Create user
+  // Create new user
   const user = await User.create({
     name,
     email,
@@ -122,8 +157,24 @@ const deleteStudent = async (id, currentUser) => {
   student.isActive = false;
   await student.save();
 
-  // Soft delete user
-  await User.findByIdAndUpdate(student.user, { isActive: false });
+  // For the user, we need to handle the email uniqueness constraint
+  // Option 1: Hard delete the user (recommended for complete removal)
+  // Option 2: Soft delete with unique email modification
+
+  try {
+    // Option 1: Hard delete the user completely
+    await User.findByIdAndDelete(student.user);
+  } catch (error) {
+    // If hard delete fails, try soft delete with email modification
+    const user = await User.findById(student.user);
+    if (user) {
+      // Make email unique by adding timestamp and soft delete
+      const timestamp = Date.now();
+      user.email = `deleted_${timestamp}_${user.email}`;
+      user.isActive = false;
+      await user.save();
+    }
+  }
 
   return { message: "Student deleted successfully" };
 };

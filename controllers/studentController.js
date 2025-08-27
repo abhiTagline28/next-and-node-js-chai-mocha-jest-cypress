@@ -74,6 +74,7 @@ const getStudent = asyncHandler(async (req, res) => {
 const createStudent = asyncHandler(async (req, res) => {
   try {
     const student = await studentService.createStudent(req.body);
+    console.log("student >>>> ", student);
 
     res.status(201).json({
       success: true,
