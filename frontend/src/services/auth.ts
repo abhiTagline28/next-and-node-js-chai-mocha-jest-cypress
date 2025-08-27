@@ -1,29 +1,102 @@
 import { apiFetch, setAccessToken } from "@/lib/api";
 
-type AuthResponse = {
-  success: boolean;
-  message?: string;
-  token?: string;
-  user?: { id: string; name: string; email: string; role: "student" | "teacher" | "admin" };
+export interface User {
+  id: string;
+  name?: string;
+  email: string;
+  role: string;
+}
+
+export interface AuthResponse {
+  user: User;
+  token: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface SignupRequest {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  grade?: string;
+  section?: string;
+  department?: string;
+  qualification?: string;
+  experience?: string;
+  specialization?: string;
+  salary?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  contactNumber?: string;
+  address?: string;
+}
+
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  password: string;
+  confirmPassword: string;
+}
+
+// Real API implementation
+export const login = async (data: LoginRequest): Promise<AuthResponse> => {
+  const response = await apiFetch<AuthResponse>('/auth/login', {
+    method: 'POST',
+    body: data
+  });
+  setAccessToken(response.token);
+  return response;
 };
 
-export const signup = async (payload: Record<string, any>) => {
-  const res = await apiFetch<AuthResponse>("/auth/signup", { method: "POST", body: payload });
-  if (res.token) setAccessToken(res.token);
-  return res;
+export const signup = async (data: SignupRequest): Promise<AuthResponse> => {
+  const response = await apiFetch<AuthResponse>('/auth/signup', {
+    method: 'POST',
+    body: data
+  });
+  setAccessToken(response.token);
+  return response;
 };
 
-export const login = async (email: string, password: string) => {
-  const res = await apiFetch<AuthResponse>("/auth/login", { method: "POST", body: { email, password } });
-  if (res.token) setAccessToken(res.token);
-  return res;
+export const logout = async (): Promise<void> => {
+  try {
+    await apiFetch('/auth/logout', {
+      method: 'POST',
+      auth: true
+    });
+  } finally {
+    setAccessToken(null);
+  }
 };
 
-export const forgotPassword = (email: string) =>
-  apiFetch<AuthResponse>("/auth/forgot-password", { method: "POST", body: { email } });
+export const me = async (): Promise<AuthResponse> => {
+  return await apiFetch<AuthResponse>('/auth/me', {
+    auth: true
+  });
+};
 
-export const resetPassword = (resetToken: string, password: string) =>
-  apiFetch<AuthResponse>(`/auth/reset-password/${resetToken}`, { method: "POST", body: { password } });
+export const forgotPassword = async (data: ForgotPasswordRequest): Promise<{ message: string }> => {
+  return await apiFetch<{ message: string }>('/auth/forgot-password', {
+    method: 'POST',
+    body: data
+  });
+};
+
+export const resetPassword = async (data: ResetPasswordRequest): Promise<{ message: string }> => {
+  return await apiFetch<{ message: string }>(`/auth/reset-password/${data.token}`, {
+    method: 'POST',
+    body: {
+      password: data.password,
+      confirmPassword: data.confirmPassword
+    }
+  });
+};
 
 export const changePassword = (currentPassword: string, newPassword: string) =>
   apiFetch<AuthResponse>("/auth/change-password", {
@@ -31,11 +104,4 @@ export const changePassword = (currentPassword: string, newPassword: string) =>
     body: { currentPassword, newPassword },
     auth: true,
   });
-
-export const me = () => apiFetch<{ success: boolean; user: AuthResponse["user"] }>("/auth/me", { auth: true });
-
-export const logout = async () => {
-  await apiFetch<AuthResponse>("/auth/logout", { method: "POST", auth: true });
-  setAccessToken(null);
-};
 

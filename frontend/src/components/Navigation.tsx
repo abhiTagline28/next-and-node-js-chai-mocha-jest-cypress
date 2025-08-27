@@ -1,24 +1,34 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { logout } from "@/services/auth";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { me } from "@/services/auth";
 
 export default function Navigation() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [user, setUser] = useState<{
+    name?: string;
+    email?: string;
+    role?: string;
+  } | null>(null);
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-      location.href = "/login";
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+  useEffect(() => {
+    me()
+      .then((r) => setUser(r.user || null))
+      .catch((e) => console.error("Failed to get user info:", e));
+  }, []);
 
   const navItems = [
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/students", label: "Students" },
-    { href: "/teachers", label: "Teachers" },
+    // Only show Students for admin and teacher
+    ...(user?.role === "admin" || user?.role === "teacher"
+      ? [{ href: "/students", label: "Students" }]
+      : []),
+    // Only show Teachers for admin
+    ...(user?.role === "admin"
+      ? [{ href: "/teachers", label: "Teachers" }]
+      : []),
   ];
 
   return (
@@ -50,12 +60,7 @@ export default function Navigation() {
             </div>
           </div>
           <div className="flex items-center">
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 rounded-md text-sm font-medium text-foreground bg-muted hover:bg-accent transition-colors"
-            >
-              Logout
-            </button>
+            {/* Logout button removed - dashboard has its own logout button */}
           </div>
         </div>
       </div>

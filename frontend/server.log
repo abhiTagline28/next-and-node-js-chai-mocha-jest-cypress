@@ -1,0 +1,109 @@
+
+> frontend@0.1.0 dev
+> next dev
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/tagline/Desktop/nodejs/chai-mocha-sinon-test-cases/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/tagline/Desktop/nodejs/chai-mocha-sinon-test-cases/frontend/package-lock.json
+
+ ⚠ Port 3000 is in use by process 19755, using available port 3001 instead.
+   ▲ Next.js 15.5.0
+   - Local:        http://localhost:3001
+   - Network:      http://192.168.0.113:3001
+
+ ✓ Starting...
+   Disabled SWC as replacement for Babel because of custom Babel configuration "babel.config.js" https://nextjs.org/docs/messages/swc-disabled
+   `compiler` options in `next.config.js` will be ignored while using Babel https://nextjs.org/docs/messages/ignored-compiler-options
+ ✓ Ready in 2.1s
+ ✓ Compiled /middleware in 202ms (114 modules)
+   Using external babel configuration from /Users/tagline/Desktop/nodejs/chai-mocha-sinon-test-cases/frontend/babel.config.js
+ ○ Compiling / ...
+ ✓ Compiled / in 2.2s (609 modules)
+ HEAD / 200 in 2794ms
+ ✓ Compiled in 942ms (237 modules)
+ GET / 200 in 89ms
+ GET / 200 in 51ms
+ ✓ Compiled /login in 290ms (616 modules)
+ GET /login 200 in 542ms
+ GET / 200 in 254ms
+ ○ Compiling /signup ...
+ ✓ Compiled /signup in 621ms (623 modules)
+ GET /signup 200 in 717ms
+ GET / 200 in 128ms
+ GET /login 200 in 89ms
+ ✓ Compiled in 129ms (241 modules)
+ GET / 200 in 52ms
+ GET /login 200 in 56ms
+ GET / 200 in 43ms
+ GET /login 200 in 84ms
+ ✓ Compiled in 153ms (241 modules)
+ GET / 200 in 49ms
+ GET /login 200 in 123ms
+ ✓ Compiled in 158ms (241 modules)
+ GET / 200 in 59ms
+ GET /login 200 in 101ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 663ms (630 modules)
+ GET /dashboard 200 in 792ms
+ GET / 200 in 155ms
+ GET /login 200 in 82ms
+ GET / 200 in 64ms
+ GET /login 200 in 74ms
+ ✓ Compiled in 184ms (243 modules)
+ GET / 200 in 135ms
+ GET /login 200 in 144ms
+ GET /signup 200 in 100ms
+ GET / 200 in 69ms
+ GET /signup 200 in 79ms
+ ✓ Compiled in 136ms (243 modules)
+ GET / 200 in 64ms
+ GET /signup 200 in 105ms
+ GET / 200 in 50ms
+ GET /signup 200 in 94ms
+ ✓ Compiled in 143ms (243 modules)
+ GET / 200 in 135ms
+ GET /signup 200 in 210ms
+ GET / 200 in 53ms
+ GET /signup 200 in 186ms
+ ✓ Compiled in 194ms (243 modules)
+ GET / 200 in 91ms
+ GET /signup 200 in 67ms
+ GET /dashboard 200 in 70ms
+ ✓ Compiled in 141ms (243 modules)
+ GET / 200 in 93ms
+ GET /dashboard 200 in 152ms
+ ○ Compiling /students ...
+ ✓ Compiled /students in 1439ms (639 modules)
+ GET /signup 200 in 933ms
+ GET /students 200 in 2358ms
+ ○ Compiling /teachers ...
+ ✓ Compiled /teachers in 1129ms (648 modules)
+ GET /teachers 200 in 1451ms
+ GET /dashboard 200 in 43ms
+ ✓ Compiled in 174ms (249 modules)
+ GET / 200 in 337ms
+ GET /dashboard 200 in 233ms
+ GET /signup 200 in 84ms
+ GET /login 200 in 136ms
+ GET / 200 in 46ms
+ ✓ Compiled /forgot-password in 488ms (655 modules)
+ GET /forgot-password 200 in 724ms
+ ✓ Compiled in 116ms (251 modules)
+ GET / 200 in 63ms
+ GET /dashboard 200 in 127ms
+ GET /forgot-password 200 in 61ms
+ ✓ Compiled in 176ms (251 modules)
+ GET / 200 in 65ms
+ GET /dashboard 200 in 117ms
+ GET /forgot-password 200 in 56ms
+ ✓ Compiled in 110ms (251 modules)
+ GET / 200 in 256ms
+ GET /dashboard 200 in 310ms
+ GET /forgot-password 200 in 76ms
+ GET /login 200 in 89ms
+ GET / 200 in 48ms
+ ✓ Compiled in 722ms (663 modules)
+ GET /dashboard 200 in 198ms

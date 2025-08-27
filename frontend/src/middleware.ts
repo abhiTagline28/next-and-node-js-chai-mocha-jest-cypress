@@ -6,12 +6,14 @@ const PUBLIC_PATHS = new Set([
   "/login",
   "/signup",
   "/forgot-password",
-  "/reset-password",
 ]);
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const isPublic = PUBLIC_PATHS.has(pathname) || pathname.startsWith("/_next") || pathname.startsWith("/assets");
+  const isPublic = PUBLIC_PATHS.has(pathname) || 
+                   pathname.startsWith("/_next") || 
+                   pathname.startsWith("/assets") ||
+                   pathname.startsWith("/reset-password/");
 
   // Read token from cookie set by client utils
   const token = req.cookies.get("access_token")?.value;

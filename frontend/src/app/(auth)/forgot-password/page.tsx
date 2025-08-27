@@ -15,12 +15,13 @@ export default function ForgotPasswordPage() {
     setMessage(null);
 
     try {
-      const res = await forgotPassword(email);
+      const res = await forgotPassword({ email });
       setMessage(
         res.message || "If the email exists, a reset token was generated."
       );
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to process request";
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to process request";
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -33,15 +34,27 @@ export default function ForgotPasswordPage() {
         onSubmit={onSubmit}
         className="w-full max-w-md space-y-4 bg-white p-8 rounded-lg shadow-lg border"
       >
-        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">Forgot Password</h1>
-        {message && <p className="text-green-600 text-sm bg-green-50 p-3 rounded border border-green-200">{message}</p>}
-        {error && <p className="text-red-600 text-sm bg-red-50 p-3 rounded border border-red-200">{error}</p>}
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
+          Forgot your password?
+        </h1>
+        {message && (
+          <p className="text-green-600 text-sm bg-green-50 p-3 rounded border border-green-200">
+            {message}
+          </p>
+        )}
+        {error && (
+          <p className="text-red-600 text-sm bg-red-50 p-3 rounded border border-red-200">
+            {error}
+          </p>
+        )}
 
         <p className="text-gray-600 text-center mb-4">
-          Enter your email address and we&apos;ll send you a link to reset your password.
+          Enter your email address and we&apos;ll send you a link to reset your
+          password.
         </p>
 
         <input
+          id="email"
           className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           type="email"
           placeholder="Email"
@@ -51,6 +64,7 @@ export default function ForgotPasswordPage() {
         />
 
         <button
+          type="submit"
           disabled={loading}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg disabled:opacity-60 transition-colors duration-200"
         >
@@ -58,7 +72,10 @@ export default function ForgotPasswordPage() {
         </button>
 
         <div className="text-center">
-          <a href="/login" className="text-blue-600 hover:text-blue-800 hover:underline text-sm">
+          <a
+            href="/login"
+            className="text-blue-600 hover:text-blue-800 hover:underline text-sm"
+          >
             Back to Login
           </a>
         </div>

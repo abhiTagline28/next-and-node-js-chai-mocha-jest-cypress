@@ -14,8 +14,13 @@ interface FormData {
   section: string;
   department: string;
   qualification: string;
+  experience: string;
+  specialization: string;
+  salary: string;
   dateOfBirth: string;
   gender: string;
+  contactNumber: string;
+  address: string;
 }
 
 export default function SignupPage() {
@@ -30,8 +35,13 @@ export default function SignupPage() {
     section: "A",
     department: "Mathematics",
     qualification: "Masters",
+    experience: "",
+    specialization: "",
+    salary: "",
     dateOfBirth: "1990-01-01",
     gender: "other",
+    contactNumber: "",
+    address: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -93,6 +103,7 @@ export default function SignupPage() {
 
         <div className="grid grid-cols-2 gap-4">
           <input
+            id="name"
             className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Name"
             value={form.name}
@@ -100,6 +111,7 @@ export default function SignupPage() {
             required
           />
           <input
+            id="email"
             className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             type="email"
             placeholder="Email"
@@ -108,6 +120,7 @@ export default function SignupPage() {
             required
           />
           <input
+            id="password"
             className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             type="password"
             placeholder="Password"
@@ -117,6 +130,7 @@ export default function SignupPage() {
           />
 
           <select
+            id="role"
             className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             value={role}
             onChange={(e) => {
@@ -133,6 +147,7 @@ export default function SignupPage() {
           {role === "student" && (
             <>
               <select
+                id="grade"
                 className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={form.grade}
                 onChange={(e) => update("grade", e.target.value)}
@@ -144,6 +159,7 @@ export default function SignupPage() {
                 ))}
               </select>
               <select
+                id="section"
                 className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={form.section}
                 onChange={(e) => update("section", e.target.value)}
@@ -160,6 +176,7 @@ export default function SignupPage() {
           {role === "teacher" && (
             <>
               <select
+                id="department"
                 className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={form.department}
                 onChange={(e) => update("department", e.target.value)}
@@ -173,6 +190,7 @@ export default function SignupPage() {
                 ))}
               </select>
               <select
+                id="qualification"
                 className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={form.qualification}
                 onChange={(e) => update("qualification", e.target.value)}
@@ -185,18 +203,41 @@ export default function SignupPage() {
                   </option>
                 ))}
               </select>
+              <input
+                id="experience"
+                className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Years of Experience"
+                value={form.experience}
+                onChange={(e) => update("experience", e.target.value)}
+              />
+              <input
+                id="specialization"
+                className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Specialization"
+                value={form.specialization}
+                onChange={(e) => update("specialization", e.target.value)}
+              />
+              <input
+                id="salary"
+                className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Salary"
+                value={form.salary}
+                onChange={(e) => update("salary", e.target.value)}
+              />
             </>
           )}
 
           {(role === "student" || role === "teacher") && (
             <>
               <input
+                id="dateOfBirth"
                 className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 type="date"
                 value={form.dateOfBirth}
                 onChange={(e) => update("dateOfBirth", e.target.value)}
               />
               <select
+                id="gender"
                 className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={form.gender}
                 onChange={(e) => update("gender", e.target.value)}
@@ -207,11 +248,26 @@ export default function SignupPage() {
                   </option>
                 ))}
               </select>
+              <input
+                id="contactNumber"
+                className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Contact Number"
+                value={form.contactNumber}
+                onChange={(e) => update("contactNumber", e.target.value)}
+              />
+              <input
+                id="address"
+                className="border border-border rounded-lg px-4 py-3 bg-muted text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Address"
+                value={form.address}
+                onChange={(e) => update("address", e.target.value)}
+              />
             </>
           )}
         </div>
 
         <button
+          type="submit"
           disabled={loading}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg disabled:opacity-60 transition-colors duration-200"
         >
